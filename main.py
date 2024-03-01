@@ -32,4 +32,3 @@ def task1():
 
 
 print(task1())
-
