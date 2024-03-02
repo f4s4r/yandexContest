@@ -29,6 +29,27 @@ def task1():
 
     return common_len - (need_max - need_min + 1)
 
+def task2():
+    str1 = input()
+    str2 = input()
+    is_first_home = True if input() == "1" else False
+    fst_match = list(map(int, str1.split(":")))
+    snd_match = list(map(int, str2.split(":")))
+    need_goals = fst_match[1] + snd_match[1] - fst_match[0] - snd_match[0]
+    if is_first_home:
+        if snd_match[1] < snd_match[0] + need_goals:
+            return (need_goals)
+        else:
+            return (need_goals + 1)
+    else:
+        if fst_match[0] > fst_match[1]:
+            advantage = True
+        else:
+            advantage = False
+        if advantage:
+            return need_goals
+        else:
+            return (need_goals + 1)
 
 
-print(task1())
+print(task2())
