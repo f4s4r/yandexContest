@@ -77,4 +77,44 @@ def task3():
     return res
 
 
-print(task3())
+def task7():
+    my_sold = int(input())
+    tower_hp = int(input())
+    sold_per_round = int(input())
+
+    cur_enemy_sold = 0
+    rounds = 0
+    if my_sold == sold_per_round and tower_hp == my_sold + 1:
+        return -1
+    if my_sold < sold_per_round:
+        while True:
+            rounds += 1
+            cur_enemy_sold -= my_sold - min(my_sold, tower_hp)
+            tower_hp -= min(my_sold, tower_hp)
+
+            my_sold -= cur_enemy_sold
+
+            if tower_hp != 0:
+                cur_enemy_sold += sold_per_round
+            if tower_hp == 0 and cur_enemy_sold <= 0:
+                return rounds
+            if my_sold <= 0:
+                return -1
+    if my_sold >= sold_per_round:
+        while True:
+
+            rounds += 1
+            tower_hp -= my_sold - min(cur_enemy_sold, my_sold)
+            cur_enemy_sold -= min(cur_enemy_sold, my_sold)
+
+            my_sold -= cur_enemy_sold
+            if tower_hp <= 0 and cur_enemy_sold == 0:
+                return rounds
+            if tower_hp != 0:
+                cur_enemy_sold += sold_per_round
+            if my_sold <= 0:
+                return -1
+
+
+
+print(task7())
