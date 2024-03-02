@@ -52,4 +52,29 @@ def task2():
             return (need_goals + 1)
 
 
-print(task2())
+def task3():
+    def calc_quantity(number):
+        k = 0
+        if number == 0:
+            return 0
+        dic = {0: 1,
+               1: 1,
+               2: 2,
+               3: 2
+               }
+        if number > 4:
+            l = number // 4
+            k += l
+            number -= 4 * l
+        if number != 0:
+            k += dic[number % 4]
+        return k
+
+    n = int(input())
+    res = 0
+    for i in range(n):
+        res += calc_quantity(int(input()))
+    return res
+
+
+print(task3())
