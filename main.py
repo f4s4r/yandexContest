@@ -27,32 +27,7 @@ def task1():
     need_min = max(mas_left, vas_left)
     need_max = min(mas_right, vas_right)
 
-    return common_len - (need_max - need_min + 1)
-
-
-def task3():
-    def calc_quantity(number):
-        k = 0
-        if number == 0:
-            return 0
-        dic = {0: 1,
-               1: 1,
-               2: 2,
-               3: 2
-               }
-        if number > 4:
-            l = number // 4
-            k += l
-            number -= 4 * l
-        if number != 0:
-            k += dic[number % 4]
-        return k
-
-    n = int(input())
-    res = 0
-    for i in range(n):
-        res += calc_quantity(int(input()))
-    return res
+    return common_len - (need_max - need_min + 1)  # works
 
 
 def task2():
@@ -120,7 +95,31 @@ def task2():
     else:
         return difference + 1 if difference >= 0 else 0
 
-print(task2())
+
+def task3():
+    def calc_quantity(number):
+        k = 0
+        if number == 0:
+            return 0
+        dic = {0: 1,
+               1: 1,
+               2: 2,
+               3: 2
+               }
+        if number > 4:
+            l = number // 4
+            k += l
+            number -= 4 * l
+        if number != 0:
+            k += dic[number % 4]
+        return k
+
+    n = int(input())
+    res = 0
+    for i in range(n):
+        res += calc_quantity(int(input()))
+    return res
+
 
 def task7():
     my_sold = int(input())
@@ -200,5 +199,15 @@ def task4():
                 k += 1
     return k
 
-
-
+def task5():
+    profit, numbers_quantity, days = input().split()
+    profit, numbers_quantity, days = int(profit), int(numbers_quantity), int(days)
+    new_profit = -1
+    for i in range(10):
+        if (profit * 10 + i) % numbers_quantity == 0:
+            new_profit = profit * 10 + i
+    if new_profit == -1:
+        return -1
+    else:
+        return str(new_profit) + '0' * (days - 1)
+print(task5())
