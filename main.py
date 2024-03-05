@@ -210,4 +210,75 @@ def task5():
         return -1
     else:
         return str(new_profit) + '0' * (days - 1)
-print(task5())
+
+def task9():
+    num_from_day_of_week = {
+        "Monday": 0,
+        "Tuesday": 1,
+        "Wednesday": 2,
+        "Thursday": 3,
+        "Friday": 4,
+        "Saturday": 5,
+        "Sunday": 6
+    }
+    day_of_week_by_num = [
+        "Monday",
+        "Tuesday",
+        "Wednesday",
+        "Thursday",
+        "Friday",
+        "Saturday",
+        "Sunday"
+    ]
+
+    celeb_num = int(input())
+    year = int(input())
+    holydays = []
+    holydays_in_digit = []
+    busy_week_days = [0]*7
+    for i in range(celeb_num):
+        holydays.append(input().split())
+    start_day = input()
+
+    if year % 4 == 0 and year != 1900:
+        is_wis = True
+        days_in_year = 366
+    else:
+        is_wis = False
+        days_in_year = 365
+    num_from_month = {
+        "January": 31,
+        "February": 29 if is_wis else 28,
+        "March": 31,
+        "April": 30,
+        "May": 31,
+        "June": 30,
+        "July": 31,
+        "August": 31,
+        "September": 30,
+        "October": 31,
+        "November": 30,
+        "December": 31
+    }
+
+    for i in range(len(holydays)):
+        days = 0
+        for cur_num_by_month in num_from_month:
+            if holydays[i][1] != cur_num_by_month:
+                days += num_from_month[cur_num_by_month]
+            else:
+                days += int(holydays[i][0]) - 1
+                break
+        holydays_in_digit.append(days)
+
+    for i in range(num_from_day_of_week[start_day], days_in_year + num_from_day_of_week[start_day]):
+        real_i = i - num_from_day_of_week[start_day]
+        busy_week_days[i % 7] += 1
+        for j in range(len(holydays_in_digit)):
+            if real_i == holydays_in_digit[j]:
+                busy_week_days[i % 7] -= 1
+    res1 = day_of_week_by_num[busy_week_days.index(max(busy_week_days))]
+    res2 = day_of_week_by_num[busy_week_days.index(min(busy_week_days))]
+    return res1 + " " + res2
+
+print(task9())
