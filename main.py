@@ -159,46 +159,6 @@ def task7():
             if my_sold <= 0:
                 return -1
 
-
-def task4():
-    global rem_r, rem_b
-    board = []
-    rem_b_ex = False
-    rem_r_ex = False
-    for line in range(8):
-        board.append([])
-        string = input()
-        for col in range(8):
-            cur_symb = string[col]
-            if cur_symb == 'R':
-                board[line].append('R')
-                rem_r = [line, col]
-                rem_r_ex = True
-            if cur_symb == 'B':
-                board[line].append('B')
-                rem_b = [line, col]
-                rem_b_ex = True
-            else:
-                board[line].append('*')
-    k = 0
-    for line in range(8):
-        for col in range(8):
-            if rem_r_ex and line == rem_r[0]:
-                board[line][col] = 'R'
-            if rem_r_ex and col == rem_r[1]:
-                board[line][col] = 'R'
-            if rem_b_ex and abs(line - rem_b[0]) == abs(col - rem_b[1]):
-                board[line][col] = 'B'
-    for i in range(8):
-        for j in range(8):
-            print(board[i][j], end='')
-        print()
-    for i in range(8):
-        for j in range(8):
-            if board[i][j] == '*':
-                k += 1
-    return k
-
 def task5():
     profit, numbers_quantity, days = input().split()
     profit, numbers_quantity, days = int(profit), int(numbers_quantity), int(days)
@@ -281,4 +241,123 @@ def task9():
     res2 = day_of_week_by_num[busy_week_days.index(min(busy_week_days))]
     return res1 + " " + res2
 
-print(task9())
+
+def task4():
+    def show(board):
+        for i in range(8):
+            cur_line = ''
+            for j in range(8):
+                cur_line += board[i][j]
+            print(cur_line)
+    board = []
+    for line in range(8):
+        board.append([])
+        string = input()
+        for col in range(8):
+            cur_symb = string[col]
+            if cur_symb == 'R':
+                board[line].append('R')
+            elif cur_symb == 'B':
+                board[line].append('B')
+            else:
+                board[line].append('*')
+
+    for line in range(8):
+        for col in range(8):
+            if board[line][col] == "R":
+                for in_right in range(col + 1, 8):
+                    if board[line][in_right] != "B" and board[line][in_right] != "R":
+                        board[line][in_right] = "r"
+                    elif board[line][in_right] == "R":
+                        pass
+                    else:
+                        break
+
+                for in_left in range(col - 1, -1, -1):
+                    if board[line][in_left] != "B" and board[line][in_left] != "R":
+                        board[line][in_left] = "r"
+                    elif board[line][in_left] == "R":
+                        pass
+                    else:
+                        break
+
+                for in_up in range(line-1, -1, -1):
+                    if board[in_up][col] != "B" and board[in_up][col] != "R":
+                        board[in_up][col] = "r"
+                    elif board[in_up][col] == "R":
+                        pass
+                    else:
+                        break
+                for in_down in range(line + 1, 8):
+                    if board[in_down][col] != "B" and board[in_down][col] != "R":
+                        board[in_down][col] = "r"
+                    elif board[in_down][col] == "R":
+                        pass
+                    else:
+                        break
+    #show(board)
+    for line in range(8):
+        for col in range(8):
+            if board[line][col] == "B":
+                # right down
+                right = col + 1
+                down = line + 1
+                stop = False
+                while right < 8 and down < 8 and not(stop):
+                    if board[down][right] != "R" and board[down][right] != "B":
+                        board[down][right] = "b"
+                    elif board[down][right] == "B":
+                        pass
+                    else:
+                        stop = True
+                    right += 1
+                    down += 1
+                # right up
+                right = col + 1
+                up = line - 1
+                stop = False
+                while right != 8 and up != -1 and not(stop):
+                    if board[up][right] != "R" and board[up][right] != "B":
+                        board[up][right] = "b"
+                    elif board[up][right] == "B":
+                        pass
+                    else:
+                        stop = True
+                    right += 1
+                    up -= 1
+                # left up
+                left = col - 1
+                up = line - 1
+                stop = False
+                while left != -1 and up != -1 and not(stop):
+                    if board[up][left] != "R" and board[up][left] != "B":
+                        board[up][left] = "b"
+                    elif board[up][left] == "B":
+                        pass
+                    else:
+                        stop = True
+                    left -= 1
+                    up -= 1
+                # left down
+                left = col - 1
+                down = line + 1
+                stop = False
+                while left != -1 and down != 8 and not(stop):
+                    if board[down][left] != "R" and board[down][left] != "B":
+                        board[down][left] = "b"
+                    elif board[down][left] == "B":
+                        pass
+                    else:
+                        stop = True
+                    left -= 1
+                    down += 1
+    #show(board)
+    count = 0
+    for i in range(8):
+        for j in range(8):
+            if board[i][j] == "*":
+                count += 1
+    return count
+
+
+print(task4())
