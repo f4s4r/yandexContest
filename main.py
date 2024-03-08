@@ -159,6 +159,7 @@ def task7():
             if my_sold <= 0:
                 return -1
 
+
 def task5():
     profit, numbers_quantity, days = input().split()
     profit, numbers_quantity, days = int(profit), int(numbers_quantity), int(days)
@@ -170,6 +171,7 @@ def task5():
         return -1
     else:
         return str(new_profit) + '0' * (days - 1)
+
 
 def task9():
     num_from_day_of_week = {
@@ -359,5 +361,21 @@ def task4():
                 count += 1
     return count
 
-
-print(task4())
+def task6():
+    n = int(input())
+    res = ""
+    list_num = list(map(int, input().split(" ")))
+    summ = list_num[0] % 2
+    for i in range(1, n):
+        cur_num = list_num[i]
+        if (cur_num % 2 == 0 and summ == 1) or (cur_num % 2 == 1 and summ == 0):
+            summ = 1
+            res += "+"
+        elif cur_num % 2 == 0 and summ == 0:
+            res += "+"
+        elif cur_num % 2 == 1 and summ == 1:
+            res += "x"
+    return res
+    
+    
+print(task6())
