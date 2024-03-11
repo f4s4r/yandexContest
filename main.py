@@ -377,5 +377,29 @@ def task6():
             res += "x"
     return res
     
-    
-print(task6())
+
+def task8():
+    def search_dis(L, pos):
+        return pos if (pos <= L / 2) else (pos - L / 2)
+
+    def dist_after_time(time, L, x1, v1, x2, v2):
+        res1 = (x1 + v1 * time) % L
+        res2 = (x2 + v2 * time) % L
+        return res1, res2
+
+    L, x1, v1, x2, v2 = list(map(int, input().split(" ")))
+
+    dist_ratio = v1 / v2
+
+    start_dist1 = search_dis(L, x1)
+    start_dist2 = search_dis(L, x2)
+
+    dist_difference = abs(start_dist1 - start_dist2)
+
+    needed_dist1 = v1 * (dist_difference / (v1 + v2))
+    # needed_dist2 = v2 * (dist_difference / (v1 + v2))
+
+    return needed_dist1 / v1
+
+
+print(task8())
