@@ -401,5 +401,4 @@ def task8():
 
     return needed_dist1 / v1
 
-
 print(task8())
